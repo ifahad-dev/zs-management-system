@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZS Pizza — Sector 5B, Karachi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#14100e;
+    --char:#1e1815;
+    --char-2:#241d19;
+    --gray:#3c3531;
+    --gray-line:#4a423d;
+    --gray-light:#a89d92;
+    --cream:#ece4d8;
+    --red-deep:#6e1216;
+    --red:#a91d1f;
+    --red-bright:#d1432b;
+    --radius:2px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--black);
+    color:var(--cream);
+    font-family:'Work Sans', sans-serif;
+    line-height:1.5;
+    /* low-saturation grain texture */
+    background-image:
+      radial-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.008) 0px, rgba(255,255,255,0.008) 2px, transparent 2px, transparent 5px);
+    background-size: 3px 3px, auto;
+  }
+  h1,h2,h3,h4{
+    font-family:'Oswald', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+    font-weight:600;
+  }
+  .mono{font-family:'JetBrains Mono', monospace;}
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+  img,svg{display:block; max-width:100%;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--red-bright);
+  }
+  button{font-family:inherit; cursor:pointer; border:none;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 26px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.82rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    border-radius:var(--radius);
+    transition:transform .15s ease, background .2s ease, border-color .2s ease;
+  }
+  .btn-primary{ background:var(--red); color:#fff; border:1px solid var(--red);}
+  .btn-primary:hover{ background:var(--red-bright); transform:translateY(-1px);}
+  .btn-ghost{ background:transparent; color:var(--cream); border:1px solid var(--gray-line);}
+  .btn-ghost:hover{ border-color:var(--red-bright); color:var(--red-bright);}
+  .btn-block{width:100%; justify-content:center;}
+
+  /* ===== NAV ===== */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(20,16,14,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--gray-line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 28px; max-width:1180px; margin:0 auto;
+  }
+  .logo{
+    font-family:'Oswald', sans-serif;
+    font-size:1.35rem;
+    font-weight:700;
+    letter-spacing:0.04em;
+  }
+  .logo span{color:var(--red-bright);}
+  .nav-links{display:flex; gap:30px; align-items:center;}
+  .nav-links a{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--gray-light);
+    transition:color .15s ease;
+  }
+  .nav-links a:hover{color:var(--cream);}
+  .nav-cta{display:flex; gap:12px; align-items:center;}
+  #hamburger{display:none; background:none; color:var(--cream); font-size:1.4rem;}
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    padding:100px 0 70px;
+    overflow:hidden;
+  }
+  .hero .wrap{position:relative; z-index:2;}
+  .hero-grid{display:grid; grid-template-columns:1.15fr 0.85fr; gap:50px; align-items:center;}
+  .hero h1{
+    font-size:clamp(2.4rem, 5vw, 4.1rem);
+    line-height:1.02;
+    margin:14px 0 20px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--red-bright);
+    display:block;
+  }
+  .hero p.lead{
+    color:var(--gray-light);
+    font-size:1.05rem;
+    max-width:46ch;
+    margin-bottom:32px;
+  }
+  .hero-actions{display:flex; gap:14px; flex-wrap:wrap;}
+  .hero-stats{
+    display:flex; gap:34px; margin-top:46px;
+    border-top:1px solid var(--gray-line); padding-top:22px;
+  }
+  .hero-stats div b{
+    display:block; font-family:'Oswald'; font-size:1.5rem; color:var(--red-bright);
+  }
+  .hero-stats div span{
+    font-family:'JetBrains Mono'; font-size:0.68rem; color:var(--gray-light); text-transform:uppercase; letter-spacing:.06em;
+  }
+  .hero-visual{
+    position:relative;
+    aspect-ratio:1/1;
+    border-radius:50%;
+    background:radial-gradient(circle at 32% 28%, #3a1310, var(--char) 70%);
+    border:1px solid var(--gray-line);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .hero-visual .ring{
+    position:absolute; inset:14%;
+    border:1px dashed var(--gray-line);
+    border-radius:50%;
+    animation:spin 40s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg);} }
+  .hero-visual svg{width:52%; height:52%;}
+
+  /* charred crust divider — signature element */
+  .crust-divider{
+    width:100%; height:64px; display:block;
+    margin-top:-2px;
+  }
+
+  /* ===== ORDER TYPE ===== */
+  .order-type{ padding:10px 0 70px; }
+  .section-head{ margin-bottom:34px; max-width:60ch; }
+  .section-head h2{ font-size:clamp(1.7rem,3vw,2.4rem); margin-top:8px; }
+  .section-head p{ color:var(--gray-light); margin-top:12px; }
+  .type-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  .type-card{
+    background:var(--char);
+    border:1px solid var(--gray-line);
+    border-radius:var(--radius);
+    padding:26px;
+    cursor:pointer;
+    transition:border-color .2s ease, background .2s ease;
+  }
+  .type-card:hover{border-color:var(--red);}
+  .type-card.active{
+    border-color:var(--red-bright);
+    background:linear-gradient(160deg, var(--char-2), var(--red-deep) 220%);
+  }
+  .type-card svg{width:30px; height:30px; color:var(--red-bright); margin-bottom:14px;}
+  .type-card h4{ font-size:1.02rem; margin-bottom:6px; }
+  .type-card p{ color:var(--gray-light); font-size:0.88rem; }
+  .type-detail{
+    margin-top:20px; padding:18px 20px;
+    background:var(--char-2); border:1px solid var(--gray-line); border-radius:var(--radius);
+    font-family:'JetBrains Mono', monospace; font-size:0.82rem; color:var(--gray-light);
+    display:flex; flex-wrap:wrap; gap:10px 28px;
+  }
+  .type-detail b{color:var(--cream);}
+
+  /* ===== MENU ===== */
+  .menu{ padding:20px 0 80px; }
+  .tabs{
+    display:flex; gap:8px; flex-wrap:wrap;
+    border-bottom:1px solid var(--gray-line);
+    margin-bottom:30px;
+  }
+  .tab-btn{
+    background:none; color:var(--gray-light);
+    padding:12px 4px; margin-right:22px;
+    font-family:'JetBrains Mono'; font-size:0.8rem; letter-spacing:.06em; text-transform:uppercase;
+    border-bottom:2px solid transparent;
+    position:relative; top:1px;
+  }
+  .tab-btn.active{ color:var(--cream); border-bottom-color:var(--red-bright); }
+  .menu-grid{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr));
+    gap:16px;
+  }
+  .item-card{
+    background:var(--char);
+    border:1px solid var(--gray-line);
+    border-radius:var(--radius);
+    padding:20px;
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .item-card.special{ border-color:var(--red); background:linear-gradient(150deg, var(--char), var(--red-deep) 260%); }
+  .item-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px;}
+  .item-top h4{ font-size:1.02rem; text-transform:none; letter-spacing:0; }
+  .badge{
+    font-family:'JetBrains Mono'; font-size:0.62rem; text-transform:uppercase; letter-spacing:.08em;
+    color:var(--red-bright); border:1px solid var(--red); padding:2px 7px; border-radius:20px;
+    white-space:nowrap;
+  }
+  .item-card p.desc{ color:var(--gray-light); font-size:0.85rem; flex-grow:1; }
+  .item-bottom{ display:flex; justify-content:space-between; align-items:center; margin-top:4px;}
+  .price{ font-family:'JetBrains Mono'; font-weight:700; color:var(--cream); }
+  .add-btn{
+    background:transparent; border:1px solid var(--gray-line); color:var(--cream);
+    width:34px; height:34px; border-radius:50%; font-size:1.1rem; line-height:1;
+    display:flex; align-items:center; justify-content:center;
+    transition:all .15s ease;
+  }
+  .add-btn:hover{ background:var(--red); border-color:var(--red); }
+
+  /* ===== CART BAR ===== */
+  .cart-bar{
+    position:fixed; bottom:18px; left:50%; transform:translateX(-50%) translateY(140%);
+    background:var(--char-2); border:1px solid var(--red-bright);
+    border-radius:40px; padding:12px 12px 12px 22px;
+    display:flex; align-items:center; gap:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    z-index:60; transition:transform .3s ease;
+  }
+  .cart-bar.show{ transform:translateX(-50%) translateY(0); }
+  .cart-bar .count{ font-family:'JetBrains Mono'; font-size:0.85rem; color:var(--gray-light); }
+  .cart-bar .total{ font-family:'JetBrains Mono'; font-weight:700; }
+
+  /* ===== LOCATIONS / CONTACT ===== */
+  .locations{ padding:20px 0 80px; }
+  .loc-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px; }
+  .info-row{ display:flex; gap:14px; padding:16px 0; border-bottom:1px solid var(--gray-line);}
+  .info-row svg{ width:20px; height:20px; color:var(--red-bright); flex-shrink:0; margin-top:2px;}
+  .info-row b{ display:block; font-size:0.92rem; margin-bottom:3px;}
+  .info-row span{ color:var(--gray-light); font-size:0.86rem;}
+  .map-box{
+    background:var(--char); border:1px solid var(--gray-line); border-radius:var(--radius);
+    display:flex; align-items:center; justify-content:center; min-height:260px;
+    color:var(--gray-light); font-family:'JetBrains Mono'; font-size:0.8rem; text-align:center; padding:20px;
+  }
+
+  footer{
+    border-top:1px solid var(--gray-line);
+    padding:34px 0; text-align:center;
+    color:var(--gray-light); font-family:'JetBrains Mono'; font-size:0.75rem;
+  }
+  footer .logo{ margin-bottom:10px; justify-content:center; display:flex;}
+
+  /* ===== STAFF TOGGLE ===== */
+  #staffToggle{
+    font-family:'JetBrains Mono'; font-size:0.72rem; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--gray-light); border:1px solid var(--gray-line); padding:9px 16px; border-radius:var(--radius); background:none;
+  }
+  #staffToggle:hover{ color:var(--red-bright); border-color:var(--red-bright); }
+
+  /* ===== STAFF VIEW ===== */
+  #staffView{ display:none; min-height:100vh; background:var(--black); }
+  .staff-header{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:18px 28px; border-bottom:1px solid var(--gray-line);
+  }
+  .staff-wrap{ max-width:1100px; margin:0 auto; padding:40px 28px; }
+  .login-box{
+    max-width:380px; margin:80px auto; background:var(--char);
+    border:1px solid var(--gray-line); border-radius:var(--radius); padding:36px;
+  }
+  .login-box h2{ font-size:1.4rem; margin-bottom:6px;}
+  .login-box p.hint{ color:var(--gray-light); font-size:0.82rem; margin-bottom:22px;}
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-family:'JetBrains Mono'; font-size:0.7rem; text-transform:uppercase; letter-spacing:.08em; color:var(--gray-light); margin-bottom:6px;}
+  .field input{
+    width:100%; padding:11px 12px; background:var(--char-2); border:1px solid var(--gray-line);
+    color:var(--cream); border-radius:var(--radius); font-family:'Work Sans'; font-size:0.92rem;
+  }
+  .field input:focus{ outline:2px solid var(--red-bright); outline-offset:1px; border-color:var(--red-bright);}
+  .login-error{ color:var(--red-bright); font-size:0.8rem; margin-bottom:12px; display:none; font-family:'JetBrains Mono';}
+
+  .stat-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:30px;}
+  .stat-card{ background:var(--char); border:1px solid var(--gray-line); border-radius:var(--radius); padding:18px;}
+  .stat-card span{ font-family:'JetBrains Mono'; font-size:0.68rem; text-transform:uppercase; color:var(--gray-light); letter-spacing:.06em;}
+  .stat-card b{ display:block; font-family:'Oswald'; font-size:1.7rem; margin-top:6px; color:var(--red-bright);}
+
+  table{ width:100%; border-collapse:collapse; font-size:0.88rem;}
+  thead th{
+    text-align:left; font-family:'JetBrains Mono'; font-size:0.7rem; text-transform:uppercase; letter-spacing:.06em;
+    color:var(--gray-light); padding:10px 12px; border-bottom:1px solid var(--gray-line);
+  }
+  tbody td{ padding:14px 12px; border-bottom:1px solid var(--gray-line); vertical-align:top;}
+  tbody tr:hover{ background:var(--char);}
+  .status-pill{
+    font-family:'JetBrains Mono'; font-size:0.68rem; text-transform:uppercase; letter-spacing:.05em;
+    padding:4px 10px; border-radius:20px; display:inline-block;
+  }
+  .st-pending{ background:rgba(209,67,43,0.15); color:var(--red-bright); border:1px solid var(--red);}
+  .st-preparing{ background:rgba(168,157,146,0.12); color:var(--gray-light); border:1px solid var(--gray-line);}
+  .st-ready{ background:rgba(60,53,49,0.5); color:var(--cream); border:1px solid var(--cream);}
+  .st-done{ background:transparent; color:var(--gray-light); border:1px solid var(--gray-line); opacity:0.6;}
+  .advance-btn{
+    background:none; border:1px solid var(--gray-line); color:var(--cream);
+    padding:6px 12px; font-family:'JetBrains Mono'; font-size:0.68rem; text-transform:uppercase; border-radius:var(--radius);
+  }
+  .advance-btn:hover{ border-color:var(--red-bright); color:var(--red-bright);}
+  .table-wrap{ background:var(--char); border:1px solid var(--gray-line); border-radius:var(--radius); overflow-x:auto; padding:6px 6px;}
+
+  @media (max-width:900px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero-visual{ max-width:280px; margin:0 auto; }
+    .type-grid{ grid-template-columns:1fr; }
+    .loc-grid{ grid-template-columns:1fr; }
+    .stat-row{ grid-template-columns:repeat(2,1fr); }
+  }
+  @media (max-width:720px){
+    .nav-links{
+      position:fixed; top:64px; right:0; left:0; background:var(--char);
+      flex-direction:column; align-items:flex-start; padding:20px 28px; gap:16px;
+      border-bottom:1px solid var(--gray-line);
+      transform:translateY(-130%); transition:transform .25s ease; z-index:40;
+    }
+    .nav-links.open{ transform:translateY(0); }
+    #hamburger{ display:block; }
+    .nav-cta .btn-ghost span{ display:none; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero-visual .ring{ animation:none; }
+    *{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ CUSTOMER VIEW ============ -->
+<div id="customerView">
+
+<header>
+  <nav>
+    <div class="logo">ZS <span>PIZZA</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#order-type">Order</a></li>
+      <li><a href="#locations">Locations</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <button id="staffToggle" onclick="showStaff()">Staff Portal</button>
+      <button id="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">Sector 5B · Karachi</span>
+        <h1>Fire, dough<br>and a Karachi<br><em>attitude.</em></h1>
+        <p class="lead">ZS Pizza fires up hand-stretched pizza, broast, and burgers from our Sector 5B kitchen — for delivery to your door, quick takeaway, or a table for the family.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#order-type">Start An Order</a>
+          <a class="btn btn-ghost" href="#menu">See The Menu</a>
+        </div>
+        <div class="hero-stats">
+          <div><b>25–35</b><span>Min Delivery</span></div>
+          <div><b>12PM–2AM</b><span>Open Daily</span></div>
+          <div><b>4.7 / 5</b><span>Customer Rating</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="ring"></div>
+        <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.4">
+          <circle cx="50" cy="50" r="42" style="color:#d1432b"/>
+          <circle cx="50" cy="50" r="6" fill="#d1432b" stroke="none"/>
+          <circle cx="68" cy="40" r="3" fill="#ece4d8" stroke="none"/>
+          <circle cx="34" cy="30" r="3" fill="#ece4d8" stroke="none"/>
+          <circle cx="30" cy="62" r="3" fill="#ece4d8" stroke="none"/>
+          <circle cx="62" cy="70" r="3" fill="#ece4d8" stroke="none"/>
+          <circle cx="70" cy="60" r="2" fill="#ece4d8" stroke="none"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <!-- signature charred-crust divider -->
+  <svg class="crust-divider" viewBox="0 0 1200 64" preserveAspectRatio="none">
+    <path d="M0,20 Q30,0 60,18 T120,16 T180,22 T240,10 T300,20 T360,8 T420,18 T480,14 T540,22 T600,10 T660,20 T720,14 T780,22 T840,10 T900,18 T960,14 T1020,22 T1080,12 T1140,20 T1200,16 L1200,64 L0,64 Z" fill="#1e1815"/>
+  </svg>
+</section>
+
+<section class="order-type" id="order-type">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">01 — Choose How</span>
+      <h2>How would you like it?</h2>
+      <p>Pick a service and we'll show you the details — timing, minimums, and what to expect.</p>
+    </div>
+    <div class="type-grid">
+      <div class="type-card active" data-type="delivery" onclick="selectType('delivery')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h13l-3-4M16 12l-3 4M16 5h3l2 4v6h-3M3 12v6h2M8 18a2 2 0 1 0 4 0 2 2 0 1 0-4 0Z"/></svg>
+        <h4>Online Delivery</h4>
+        <p>Straight to your door, anywhere in Sector 5 & nearby blocks.</p>
+      </div>
+      <div class="type-card" data-type="takeaway" onclick="selectType('takeaway')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 8h16l-1.2 11.2a2 2 0 0 1-2 1.8H7.2a2 2 0 0 1-2-1.8L4 8Z"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/></svg>
+        <h4>Takeaway</h4>
+        <p>Order ahead, skip the wait, grab it fresh from the counter.</p>
+      </div>
+      <div class="type-card" data-type="dinein" onclick="selectType('dinein')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 3v18M4 3h3v8H4M20 3v18M20 8h-3M4 13h16"/></svg>
+        <h4>Dine-In</h4>
+        <p>Grab a table at our Sector 5B branch — full menu, no rush.</p>
+      </div>
+    </div>
+    <div class="type-detail" id="typeDetail">
+      <span><b>Delivery time:</b> 25–35 min</span>
+      <span><b>Delivery area:</b> Sector 5, 5B, 11 & Nazimabad</span>
+      <span><b>Minimum order:</b> Rs. 600</span>
+    </div>
+  </div>
+</section>
+
+<section class="menu" id="menu">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">02 — The Menu</span>
+      <h2>Pizza, burgers & broast</h2>
+      <p>Everything is made to order in our Sector 5B kitchen. Tap the plus to add an item to your order.</p>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="special" onclick="selectTab('special')">ZS Special</button>
+      <button class="tab-btn" data-tab="pizza" onclick="selectTab('pizza')">Pizzas</button>
+      <button class="tab-btn" data-tab="burger" onclick="selectTab('burger')">Burgers</button>
+      <button class="tab-btn" data-tab="broast" onclick="selectTab('broast')">Broast</button>
+      <button class="tab-btn" data-tab="sides" onclick="selectTab('sides')">Sides & Drinks</button>
+    </div>
+    <div class="menu-grid" id="menuGrid"></div>
+  </div>
+</section>
+
+<div class="cart-bar" id="cartBar">
+  <span class="count" id="cartCount">0 items</span>
+  <span class="total mono" id="cartTotal">Rs. 0</span>
+  <button class="btn btn-primary" onclick="placeOrder()">Place Order</button>
+</div>
+
+<section class="locations" id="locations">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">03 — Find Us</span>
+      <h2>Sector 5B branch</h2>
+    </div>
+    <div class="loc-grid">
+      <div>
+        <div class="info-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          <div><b>Address</b><span>Shop 4, Main Commercial Boulevard, Sector 5B, North Karachi, Karachi</span></div>
+        </div>
+        <div class="info-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          <div><b>Hours</b><span>Daily, 12:00 PM – 2:00 AM</span></div>
+        </div>
+        <div class="info-row" id="contact">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5h4l2 5-2.5 1.5a11 11 0 0 0 5 5L14 14l5 2v4a2 2 0 0 1-2 2C9.5 22 2 14.5 2 7a2 2 0 0 1 2-2Z"/></svg>
+          <div><b>Order by phone</b><span>021-111-ZS-PIZZA · WhatsApp available</span></div>
+        </div>
+      </div>
+      <div class="map-box">Interactive map placeholder<br>Shop 4, Main Commercial Boulevard,<br>Sector 5B, North Karachi</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="logo">ZS <span>PIZZA</span></div>
+    <p>© 2026 ZS Pizza, Sector 5B, Karachi. Made fresh, delivered fast.</p>
+  </div>
+</footer>
+
+</div>
+
+<!-- ============ STAFF VIEW ============ -->
+<div id="staffView">
+  <div class="staff-header">
+    <div class="logo">ZS <span style="color:#d1432b">PIZZA</span> <span style="color:#a89d92; font-family:'JetBrains Mono'; font-size:0.7rem; text-transform:uppercase; margin-left:10px;">Staff Portal</span></div>
+    <button id="staffToggle" onclick="showCustomer()">← Back to site</button>
+  </div>
+
+  <div id="loginScreen">
+    <div class="login-box">
+      <h2>Staff Sign In</h2>
+      <p class="hint">Demo credentials — Username: <b>staff</b> &nbsp; Password: <b>zs1234</b></p>
+      <p class="login-error" id="loginError">Incorrect username or password.</p>
+      <div class="field">
+        <label>Username</label>
+        <input id="loginUser" type="text" placeholder="staff">
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input id="loginPass" type="password" placeholder="••••••••">
+      </div>
+      <button class="btn btn-primary btn-block" onclick="doLogin()">Sign In</button>
+    </div>
+  </div>
+
+  <div id="dashboardScreen" style="display:none;">
+    <div class="staff-wrap">
+      <div class="section-head">
+        <span class="eyebrow">Live Orders</span>
+        <h2 style="font-size:1.6rem;">Today at ZS Pizza, Sector 5B</h2>
+      </div>
+      <div class="stat-row">
+        <div class="stat-card"><span>Orders Today</span><b id="statTotal">0</b></div>
+        <div class="stat-card"><span>Pending</span><b id="statPending">0</b></div>
+        <div class="stat-card"><span>In Kitchen</span><b id="statPreparing">0</b></div>
+        <div class="stat-card"><span>Completed</span><b id="statDone">0</b></div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Order</th><th>Type</th><th>Items</th><th>Total</th><th>Status</th><th></th></tr>
+          </thead>
+          <tbody id="ordersBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- Menu data ---------- */
+const MENU = {
+  special: [
+    {n:"ZS Signature Flame Pizza", d:"Beef pepperoni, jalapeño, smoked chicken tikka, ZS secret fire sauce", p:1450, badge:"ZS Special"},
+    {n:"ZS Malai Boti Supreme", d:"Malai boti, extra mozzarella, mint drizzle, chargrilled onions", p:1550, badge:"ZS Special"},
+    {n:"ZS Karahi Fusion Pizza", d:"Chicken karahi masala base, green chili, coriander, desi cheese blend", p:1500, badge:"ZS Special"},
+  ],
+  pizza: [
+    {n:"Chicken Tikka Pizza", d:"Classic chicken tikka, capsicum, onion, mozzarella", p:1250},
+    {n:"Fajita Pizza", d:"Chicken fajita, bell peppers, onions, tomato salsa base", p:1300},
+    {n:"Beef Loaded Pizza", d:"Seasoned beef, olives, jalapeño, extra cheese", p:1400},
+    {n:"Margherita Pizza", d:"Fresh tomato sauce, basil, triple mozzarella", p:1050},
+    {n:"Veggie Delight Pizza", d:"Mushroom, capsicum, corn, onion, black olives", p:1100},
+  ],
+  burger: [
+    {n:"ZS Zinger Burger", d:"Crispy fried chicken fillet, spicy mayo, lettuce, sesame bun", p:520},
+    {n:"Beef Steakhouse Burger", d:"Grilled beef patty, cheddar, caramelized onion, BBQ sauce", p:620},
+    {n:"Chicken Cheese Burger", d:"Grilled chicken fillet, cheese slice, mustard mayo", p:480},
+    {n:"Double Patty Burger", d:"Two beef patties, double cheese, pickles, house sauce", p:750},
+  ],
+  broast: [
+    {n:"Broast Half (4pcs)", d:"Crispy fried chicken broast, served with garlic mayo & fries", p:850},
+    {n:"Broast Full (8pcs)", d:"Full crispy broast platter with fries, coleslaw & dip", p:1550},
+    {n:"Broast Roll", d:"Shredded broast chicken wrapped with mayo & pickles", p:380},
+  ],
+  sides: [
+    {n:"Loaded Fries", d:"Fries topped with cheese sauce & jalapeño", p:400},
+    {n:"Garlic Bread", d:"Toasted garlic bread with herb butter", p:350},
+    {n:"Coleslaw", d:"House-made creamy coleslaw", p:250},
+    {n:"Soft Drink (500ml)", d:"Coke, Sprite, or Fanta", p:150},
+  ]
+};
+
+const TYPE_DETAILS = {
+  delivery: '<span><b>Delivery time:</b> 25–35 min</span><span><b>Delivery area:</b> Sector 5, 5B, 11 & Nazimabad</span><span><b>Minimum order:</b> Rs. 600</span>',
+  takeaway: '<span><b>Pickup time:</b> Ready in 15–20 min</span><span><b>Counter:</b> Shop 4, Main Boulevard, Sector 5B</span><span><b>No minimum order</b></span>',
+  dinein: '<span><b>Seating:</b> Walk-in or call ahead</span><span><b>Tables:</b> Family & regular seating available</span><span><b>Full menu served fresh</b></span>'
+};
+
+let cart = [];
+let orderType = 'delivery';
+let orderCounter = 104;
+
+/* shared in-memory "database" of orders — visible to staff view too */
+let orders = [
+  {id:101, type:'Delivery', items:'ZS Signature Flame Pizza, Loaded Fries', total:1850, status:'preparing'},
+  {id:102, type:'Dine-In', items:'Beef Steakhouse Burger x2, Coleslaw', total:1490, status:'pending'},
+  {id:103, type:'Takeaway', items:'Broast Full (8pcs)', total:1550, status:'ready'},
+];
+
+function selectType(t){
+  orderType = t;
+  document.querySelectorAll('.type-card').forEach(c=>c.classList.remove('active'));
+  document.querySelector(`.type-card[data-type="${t}"]`).classList.add('active');
+  document.getElementById('typeDetail').innerHTML = TYPE_DETAILS[t];
+}
+
+function renderMenu(tab){
+  const grid = document.getElementById('menuGrid');
+  grid.innerHTML = '';
+  MENU[tab].forEach((item, idx)=>{
+    const card = document.createElement('div');
+    card.className = 'item-card' + (tab==='special' ? ' special' : '');
+    card.innerHTML = `
+      <div class="item-top">
+        <h4>${item.n}</h4>
+        ${item.badge ? `<span class="badge">${item.badge}</span>` : ''}
+      </div>
+      <p class="desc">${item.d}</p>
+      <div class="item-bottom">
+        <span class="price">Rs. ${item.p}</span>
+        <button class="add-btn" aria-label="Add ${item.n}" onclick="addToCart('${item.n.replace(/'/g,"\\'")}', ${item.p})">+</button>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function selectTab(tab){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector(`.tab-btn[data-tab="${tab}"]`).classList.add('active');
+  renderMenu(tab);
+}
+
+function addToCart(name, price){
+  cart.push({name, price});
+  updateCartBar();
+}
+
+function updateCartBar(){
+  const bar = document.getElementById('cartBar');
+  const total = cart.reduce((s,i)=>s+i.price,0);
+  document.getElementById('cartCount').textContent = cart.length + (cart.length===1 ? ' item' : ' items');
+  document.getElementById('cartTotal').textContent = 'Rs. ' + total;
+  bar.classList.toggle('show', cart.length>0);
+}
+
+function placeOrder(){
+  if(cart.length===0) return;
+  const total = cart.reduce((s,i)=>s+i.price,0);
+  const typeLabel = orderType==='delivery' ? 'Delivery' : orderType==='takeaway' ? 'Takeaway' : 'Dine-In';
+  orderCounter++;
+  orders.unshift({id: orderCounter, type: typeLabel, items: cart.map(i=>i.name).join(', '), total, status:'pending'});
+  alert(`Order #${orderCounter} placed as ${typeLabel}! Total Rs. ${total}. We'll have it ready soon.`);
+  cart = [];
+  updateCartBar();
+  renderOrders();
+}
+
+/* ---------- Staff view ---------- */
+function showStaff(){
+  document.getElementById('customerView').style.display = 'none';
+  document.getElementById('staffView').style.display = 'block';
+  window.scrollTo(0,0);
+}
+function showCustomer(){
+  document.getElementById('staffView').style.display = 'none';
+  document.getElementById('customerView').style.display = 'block';
+}
+
+function doLogin(){
+  const u = document.getElementById('loginUser').value.trim();
+  const p = document.getElementById('loginPass').value.trim();
+  if(u==='staff' && p==='zs1234'){
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('dashboardScreen').style.display='block';
+    renderOrders();
+  } else {
+    document.getElementById('loginError').style.display='block';
+  }
+}
+
+const STATUS_FLOW = {pending:'preparing', preparing:'ready', ready:'done', done:'done'};
+const STATUS_LABEL = {pending:'Pending', preparing:'Preparing', ready:'Ready', done:'Completed'};
+
+function advanceStatus(id){
+  const o = orders.find(o=>o.id===id);
+  if(o) o.status = STATUS_FLOW[o.status];
+  renderOrders();
+}
+
+function renderOrders(){
+  const body = document.getElementById('ordersBody');
+  if(!body) return;
+  body.innerHTML = '';
+  let pending=0, preparing=0, done=0;
+  orders.forEach(o=>{
+    if(o.status==='pending') pending++;
+    if(o.status==='preparing') preparing++;
+    if(o.status==='done') done++;
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td class="mono">#${o.id}</td>
+      <td>${o.type}</td>
+      <td>${o.items}</td>
+      <td class="mono">Rs. ${o.total}</td>
+      <td><span class="status-pill st-${o.status}">${STATUS_LABEL[o.status]}</span></td>
+      <td>${o.status!=='done' ? `<button class="advance-btn" onclick="advanceStatus(${o.id})">Mark ${STATUS_LABEL[STATUS_FLOW[o.status]]}</button>` : ''}</td>
+    `;
+    body.appendChild(row);
+  });
+  document.getElementById('statTotal').textContent = orders.length;
+  document.getElementById('statPending').textContent = pending;
+  document.getElementById('statPreparing').textContent = preparing;
+  document.getElementById('statDone').textContent = done;
+}
+
+/* ---------- init ---------- */
+renderMenu('special');
+</script>
+
+</body>
+</html>
